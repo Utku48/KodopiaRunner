@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,7 +16,7 @@ public class CharacterController : MonoBehaviour
     private int currentPosIndex = 1;
     Vector3 targetPos;
 
-
+    public bool isdead = false;
 
     void Start()
     {
@@ -55,4 +56,17 @@ public class CharacterController : MonoBehaviour
     {
         targetPos = new Vector3(xPositions[currentPosIndex], transform.position.y, transform.position.z);
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("car"))
+        {
+            isdead = true;
+            Destroy(other.gameObject);
+     
+        }
+    }
+
+
 }

@@ -594,6 +594,7 @@ MonoBehaviour:
   rb: {fileID: 1061245518}
   speed: 1
   smooth_speed: 10
+  isdead: 0
 --- !u!4 &1061245520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7367f46b7fb5564479bfd683e7c33874, type: 3}
@@ -756,11 +757,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac549c79444a42744b361af7ae2f9dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterController: {fileID: 1061245519}
   roads:
   - {fileID: 5763486333515693390, guid: 5d5d0d76117f1694aac7bb6600a1bbc8, type: 3}
   - {fileID: 7338960497688315930, guid: d785361deec585649acc889adc93eb19, type: 3}
   player: {fileID: 1061245520}
   carSpawn: {fileID: 1510675706}
+  explosion: {fileID: 19800006, guid: 0c1631403003b5e4d8c3f7a320bb765b, type: 3}
   roadCount: 5
   roadLength: 3.2
 --- !u!4 &1748180422
