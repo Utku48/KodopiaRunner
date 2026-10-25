@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UIElements;
 
 public class CharacterController : MonoBehaviour
@@ -17,6 +18,7 @@ public class CharacterController : MonoBehaviour
     Vector3 targetPos;
 
     public bool isdead = false;
+    private int score = 0;
 
     void Start()
     {
@@ -60,11 +62,18 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("car"))
+        if (other.gameObject.CompareTag("car") && !isdead)
         {
             isdead = true;
             Destroy(other.gameObject);
-     
+
+        }
+
+        if (other.gameObject.CompareTag("torch") && !isdead)
+        {
+            score++;
+            Debug.Log("Skor: "+ score);
+            Destroy(other.gameObject);
         }
     }
 

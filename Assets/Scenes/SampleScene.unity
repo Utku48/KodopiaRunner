@@ -738,6 +738,7 @@ GameObject:
   - component: {fileID: 1748180422}
   - component: {fileID: 1748180421}
   - component: {fileID: 1748180423}
+  - component: {fileID: 1748180424}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -823,6 +824,24 @@ MonoBehaviour:
   - {fileID: 1275265253798542093, guid: 17ad59d5218643f47bf4e8f67b9a2f5f, type: 3}
   minSpawnTime: 1
   maxSpawnTime: 3.58
+--- !u!114 &1748180424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748180420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7917a8237ca8b9646a577bca63ddefca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  torch: {fileID: 1827917065953027580, guid: 9d074cfe52d53a747b763ee51c2e2f6f, type: 3}
+  player: {fileID: 1061245520}
+  minSpawnTime: 3
+  maxSpawnTime: 6
+  spawnDistance: 12
+  torchY: 0.05
 --- !u!1 &1862258807
 GameObject:
   m_ObjectHideFlags: 0
