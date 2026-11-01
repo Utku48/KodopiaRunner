@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UIElements;
 using TMPro;
-using System.Runtime.CompilerServices;
+
 public class CharacterController : MonoBehaviour
 {
     [SerializeField] Animator animator;
@@ -14,7 +12,10 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private int speed;
     [SerializeField] private float smooth_speed = 10f;
     [SerializeField] private GameObject gameOverPanel;
+
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI FinalscoreText;
+
 
     private int health = 1;
 
@@ -29,6 +30,7 @@ public class CharacterController : MonoBehaviour
     {
         targetPos = transform.position;
         scoreText.text = "Score: " + score;
+        FinalscoreText.text = score.ToString();
     }
 
 
@@ -86,6 +88,8 @@ public class CharacterController : MonoBehaviour
         if (other.gameObject.CompareTag("torch"))
         {
             score++;
+            scoreText.text = "Score: " + score;
+            FinalscoreText.text = score.ToString();
             Debug.Log("Skor: " + score);
             Destroy(other.gameObject);
         }
