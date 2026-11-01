@@ -832,10 +832,9 @@ MonoBehaviour:
   rb: {fileID: 1061245518}
   speed: 1
   smooth_speed: 10
+  gameOverPanel: {fileID: 0}
   scoreText: {fileID: 997251634}
-  explode: 0
-  health: 1
-  score: 0
+  isdead: 0
 --- !u!4 &1061245520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7367f46b7fb5564479bfd683e7c33874, type: 3}
