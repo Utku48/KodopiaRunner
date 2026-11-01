@@ -5,13 +5,16 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UIElements;
-
+using TMPro;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private int speed;
     [SerializeField] private float smooth_speed = 10f;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TextMeshProUGUI scoreText;
+
 
     private float[] xPositions = { -0.33f, 0f, 0.33f };
     private int currentPosIndex = 1;
@@ -23,6 +26,7 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         targetPos = transform.position;
+        scoreText.text = "Score: " + score;
     }
 
 
@@ -65,14 +69,14 @@ public class CharacterController : MonoBehaviour
         if (other.gameObject.CompareTag("car") && !isdead)
         {
             isdead = true;
-            Destroy(other.gameObject);
+            scoreText.text = "Score: " + score;
 
         }
 
         if (other.gameObject.CompareTag("torch") && !isdead)
         {
             score++;
-            Debug.Log("Skor: "+ score);
+            Debug.Log("Skor: " + score);
             Destroy(other.gameObject);
         }
     }

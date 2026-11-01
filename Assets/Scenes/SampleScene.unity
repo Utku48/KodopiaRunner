@@ -614,7 +614,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.10269794, y: -0.000000014901161, z: -0, w: 0.99471265}
-  m_LocalPosition: {x: 0, y: 2.8000002, z: -4.600001}
+  m_LocalPosition: {x: 0, y: 2.8, z: -4.600001}
   m_LocalScale: {x: 6.666666, y: 6.6666656, z: 6.6666656}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_text: Score:0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -704,21 +704,21 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
+  m_fontSize: 44.75
   m_fontSizeBase: 45
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
+  m_characterSpacing: 7.38
+  m_wordSpacing: 25.26
   m_lineSpacing: 0
   m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
+  m_paragraphSpacing: 9.36
   m_charWidthMaxAdj: 0
   m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
@@ -813,9 +813,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1061245519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,7 +832,10 @@ MonoBehaviour:
   rb: {fileID: 1061245518}
   speed: 1
   smooth_speed: 10
-  isdead: 0
+  scoreText: {fileID: 997251634}
+  explode: 0
+  health: 1
+  score: 0
 --- !u!4 &1061245520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7367f46b7fb5564479bfd683e7c33874, type: 3}
