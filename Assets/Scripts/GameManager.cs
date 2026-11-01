@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
             CreateRoad();
         }
 
-        if (characterController.isdead && !explosionPlayed)
+        if (characterController.explode && !explosionPlayed)
         {
             explosionPlayed = true;
 

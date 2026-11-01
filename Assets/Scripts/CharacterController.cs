@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UIElements;
 using TMPro;
+using System.Runtime.CompilerServices;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField] Animator animator;
@@ -15,12 +16,13 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private TextMeshProUGUI scoreText;
 
+    private int health = 1;
 
     private float[] xPositions = { -0.33f, 0f, 0.33f };
     private int currentPosIndex = 1;
     Vector3 targetPos;
 
-    public bool isdead = false;
+    public bool explode = false;
     private int score = 0;
 
     void Start()
@@ -66,14 +68,22 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("car") && !isdead)
+        if (other.gameObject.CompareTag("car"))
         {
-            isdead = true;
-            scoreText.text = "Score: " + score;
+            if (health >= 2)
+            {
+                explode = true;
+                Destroy(other.gameObject);
+            }
+            else if (health <= 1)
+            {
+                gameOverPanel.SetActive(true);
+                Time.timeScale = 0;
+            }
 
         }
 
-        if (other.gameObject.CompareTag("torch") && !isdead)
+        if (other.gameObject.CompareTag("torch"))
         {
             score++;
             Debug.Log("Skor: " + score);
