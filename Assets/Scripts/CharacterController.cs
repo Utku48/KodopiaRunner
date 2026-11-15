@@ -1,99 +1,135 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
+﻿
 using UnityEngine;
 using TMPro;
 
 public class CharacterController : MonoBehaviour
 {
-    [SerializeField] Animator animator;
+    [Header("Karakter")]
+    [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private int speed;
+    [SerializeField] private int speed = 5;
     [SerializeField] private float smooth_speed = 10f;
-    [SerializeField] private GameObject gameOverPanel;
 
+    [Header("Arayuz")]
+    [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI FinalscoreText;
 
+    [Header("Oyun")]
+    [SerializeField] private GameManager gameManager;
 
-    private int health = 1;
+    private int health = 0;
+    private int score = 0;
+    private bool isDead = false;
 
     private float[] xPositions = { -0.33f, 0f, 0.33f };
     private int currentPosIndex = 1;
-    Vector3 targetPos;
-
-    public bool explode = false;
-    private int score = 0;
 
     void Start()
     {
-        targetPos = transform.position;
+        Time.timeScale = 1f;
+
+        gameOverPanel.SetActive(false);
+
         scoreText.text = "Score: " + score;
         FinalscoreText.text = score.ToString();
     }
 
-
     void Update()
     {
+        if (isDead) return;
+
         if (Input.GetKeyDown(KeyCode.A) && currentPosIndex > 0)
         {
             currentPosIndex--;
-            UpdateLateralPosition();
         }
         else if (Input.GetKeyDown(KeyCode.D) && currentPosIndex < 2)
         {
             currentPosIndex++;
-            UpdateLateralPosition();
         }
     }
 
     private void FixedUpdate()
     {
-        //ileri hareket yönü
-        Vector3 forwardMove = Vector3.forward * speed * Time.fixedDeltaTime;
+        if (isDead) return;
 
-        //Hedef noktası pozisyonuna doğru yumuşak bir geçiş yap
         Vector3 currentPosition = rb.position;
-        Vector3 letaralMove = Vector3.Lerp(currentPosition, targetPos, Time.fixedDeltaTime * smooth_speed);
 
-        //İleri ve yan haraketi birleşimi
-        Vector3 combineMove = new Vector3(letaralMove.x, transform.position.y, rb.position.z) + forwardMove;
-        rb.MovePosition(combineMove);
+      
+        float newX = Mathf.MoveTowards(
+            currentPosition.x,
+            xPositions[currentPosIndex],
+            smooth_speed * Time.fixedDeltaTime
+        );
+
+  
+        float newZ = currentPosition.z + speed * Time.fixedDeltaTime;
+
+        Vector3 newPosition = new Vector3(
+            newX,
+            currentPosition.y,
+            newZ
+        );
+
+        rb.MovePosition(newPosition);
     }
-
-    void UpdateLateralPosition()
-    {
-        targetPos = new Vector3(xPositions[currentPosIndex], transform.position.y, transform.position.z);
-    }
-
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("car"))
+        if (isDead) return;
+
+        if (other.CompareTag("car"))
         {
-            if (health >= 2)
+            health--;
+
+            Vector3 explosionPosition = other.transform.position;
+
+            Destroy(other.gameObject);
+
+    
+            gameManager.PlayExplosion(explosionPosition);
+
+            Debug.Log("Kalan can: " + health);
+
+            if (health < 0)
             {
-                explode = true;
-                Destroy(other.gameObject);
-            }
-            else if (health <= 1)
-            {
-                gameOverPanel.SetActive(true);
-                Time.timeScale = 0;
+                Die();
             }
 
+            return;
         }
 
-        if (other.gameObject.CompareTag("torch"))
+        if (other.CompareTag("torch"))
         {
             score++;
+
             scoreText.text = "Score: " + score;
             FinalscoreText.text = score.ToString();
-            Debug.Log("Skor: " + score);
+
             Destroy(other.gameObject);
+
+            Debug.Log("Skor: " + score);
+
+          
+            if (score % 5 == 0)
+            {
+                health++;
+
+                Debug.Log("Can kazandin! Can: " + health);
+            }
         }
     }
 
+    private void Die()
+    {
+        isDead = true;
 
+        FinalscoreText.text = score.ToString();
+
+        gameOverPanel.SetActive(true);
+
+        Time.timeScale = 0f;
+
+        Debug.Log("GAME OVER! Final Score: " + score);
+    }
 }

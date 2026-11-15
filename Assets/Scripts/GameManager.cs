@@ -1,29 +1,27 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private CharacterController characterController;
-
+    [Header("Yol Sistemi")]
     [SerializeField] private List<GameObject> roads = new List<GameObject>();
     [SerializeField] private Transform player;
     [SerializeField] private Transform carSpawn;
-    [SerializeField] private ParticleSystem explosion;
-
-    private float previousPlayerZ;
 
     [SerializeField] private int roadCount = 5;
     [SerializeField] private float roadLength = 3.2f;
 
+    [Header("Patlama Efekti")]
+    [SerializeField] private ParticleSystem explosion;
+
+    private float previousPlayerZ;
     private float nextRoadZ;
-    private bool explosionPlayed = false;
 
     void Start()
     {
         nextRoadZ = player.position.z;
         previousPlayerZ = player.position.z;
-
-        explosion.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         for (int i = 0; i < roadCount; i++)
         {
@@ -33,27 +31,17 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (player.position.z > nextRoadZ - (roadLength * roadCount))
+       
+        if (player.position.z >
+            nextRoadZ - (roadLength * roadCount))
         {
             CreateRoad();
-        }
-
-        if (characterController.explode && !explosionPlayed)
-        {
-            explosionPlayed = true;
-
-            ParticleSystem newExplosion = Instantiate(
-                explosion,
-                player.position,
-                Quaternion.identity
-            );
-
-            newExplosion.Play(true);
         }
     }
 
     private void FixedUpdate()
     {
+       
         float deltaZ = player.position.z - previousPlayerZ;
 
         carSpawn.position += new Vector3(0, 0, deltaZ);
@@ -63,12 +51,36 @@ public class GameManager : MonoBehaviour
 
     void CreateRoad()
     {
-        Vector3 spawnPosition = new Vector3(0f, 0f, nextRoadZ);
+        Vector3 spawnPosition = new Vector3(
+            0f,
+            0f,
+            nextRoadZ
+        );
 
-        GameObject selectedRoad = roads[Random.Range(0, roads.Count)];
+        GameObject selectedRoad = roads[
+            Random.Range(0, roads.Count)
+        ];
 
-        Instantiate(selectedRoad, spawnPosition, Quaternion.identity);
+        Instantiate(
+            selectedRoad,
+            spawnPosition,
+            Quaternion.identity
+        );
 
         nextRoadZ += roadLength;
+    }
+
+    // ARABA PATLAMA SISTEMI
+    public void PlayExplosion(Vector3 position)
+    {
+        if (explosion == null) return;
+
+        ParticleSystem newExplosion = Instantiate(
+            explosion,
+            position,
+            Quaternion.identity
+        );
+
+        newExplosion.Play(true);
     }
 }
