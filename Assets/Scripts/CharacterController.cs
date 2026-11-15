@@ -25,6 +25,9 @@ public class CharacterController : MonoBehaviour
     private float[] xPositions = { -0.33f, 0f, 0.33f };
     private int currentPosIndex = 1;
 
+
+    [SerializeField] private AudioSource backgroundMusic;
+
     void Start()
     {
         Time.timeScale = 1f;
@@ -55,14 +58,14 @@ public class CharacterController : MonoBehaviour
 
         Vector3 currentPosition = rb.position;
 
-      
+
         float newX = Mathf.MoveTowards(
             currentPosition.x,
             xPositions[currentPosIndex],
             smooth_speed * Time.fixedDeltaTime
         );
 
-  
+
         float newZ = currentPosition.z + speed * Time.fixedDeltaTime;
 
         Vector3 newPosition = new Vector3(
@@ -86,7 +89,7 @@ public class CharacterController : MonoBehaviour
 
             Destroy(other.gameObject);
 
-    
+
             gameManager.PlayExplosion(explosionPosition);
 
             Debug.Log("Kalan can: " + health);
@@ -110,7 +113,7 @@ public class CharacterController : MonoBehaviour
 
             Debug.Log("Skor: " + score);
 
-          
+
             if (score % 5 == 0)
             {
                 health++;
@@ -127,6 +130,9 @@ public class CharacterController : MonoBehaviour
         FinalscoreText.text = score.ToString();
 
         gameOverPanel.SetActive(true);
+
+
+        backgroundMusic.Stop();
 
         Time.timeScale = 0f;
 
