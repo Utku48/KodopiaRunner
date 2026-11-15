@@ -18,7 +18,7 @@ public class CharacterController : MonoBehaviour
     [Header("Oyun")]
     [SerializeField] private GameManager gameManager;
 
-    private int health = 0;
+    private int health = 1;
     private int score = 0;
     private bool isDead = false;
 
@@ -91,7 +91,7 @@ public class CharacterController : MonoBehaviour
 
             Debug.Log("Kalan can: " + health);
 
-            if (health < 0)
+            if (health <= 0)
             {
                 Die();
             }
